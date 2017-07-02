@@ -65,15 +65,28 @@ public class UserMealsUtil {
                                                                             LocalTime startTime,
                                                                             LocalTime endTime,
                                                                             int caloriesPerDay) {
-        Map<LocalDate, Integer> caloriesPerAllDays = mealList.stream()
-                .collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate(),
-                        Collectors.summingInt(UserMeal::getCalories)));
+//        Map<LocalDate, Integer> caloriesPerAllDays = mealList.stream()
+//                .collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate(),
+//                        Collectors.summingInt(UserMeal::getCalories)));
+//
+//        return mealList.stream()
+//                .filter(meal -> TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
+//                .map(meal -> new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
+//                        caloriesPerAllDays.get(meal.getDateTime().toLocalDate()) > caloriesPerDay))
+//                .collect(Collectors.toList());
 
-        return mealList.stream()
-                .filter(meal -> TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
-                .map(meal -> new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
-                        caloriesPerAllDays.get(meal.getDateTime().toLocalDate()) > caloriesPerDay))
-                .collect(Collectors.toList());
+        List<UserMealWithExceed> userMealWithExceeds = new ArrayList<>();
+
+        Map<LocalDate, List<UserMeal>> mealsByDates = mealList
+                .stream()
+                .collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate()));
+
+        mealsByDates
+                .forEach((date, meal) -> {
+
+                });
+
+        return userMealWithExceeds;
     }
 
 
@@ -82,7 +95,6 @@ public class UserMealsUtil {
                 .filter(UserMealWithExceed::isExceed)
                 .forEach(System.out::println);
     }
-
 
 
 //    public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime,
