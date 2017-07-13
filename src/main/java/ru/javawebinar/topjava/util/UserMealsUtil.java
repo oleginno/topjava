@@ -21,25 +21,25 @@ public class UserMealsUtil {
     private static List<UserMeal> mealListTest;
 
     public static void main(String[] args) {
-//        List<UserMeal> mealList = Arrays.asList(
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,10,0),
-//                        "Завтрак", 500),
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,13,0),
-//                        "Обед", 1000),
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,20,0),
-//                        "Ужин", 500),
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,10,0),
-//                        "Завтрак", 1000),
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,13,0),
-//                        "Обед", 500),
-//                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,20,0),
-//                        "Ужин", 510)
-//        );
-        populateList();
+        List<UserMeal> mealList = Arrays.asList(
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,10,0),
+                        "Завтрак", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,13,0),
+                        "Обед", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,20,0),
+                        "Ужин", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,10,0),
+                        "Завтрак", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,13,0),
+                        "Обед", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,20,0),
+                        "Ужин", 510)
+        );
+        //populateList();
 
         long start = new Date().getTime();
-        printExceeded(getFilteredWithExceeded(mealListTest, LocalTime.of(7, 0),
-                LocalTime.of(19,0), 5000));
+        System.out.println(getFilteredWithExceeded(mealList, LocalTime.of(7, 0),
+                LocalTime.of(19,0), 2000));
         System.out.println(new Date().getTime() - start);
     }
 
@@ -81,8 +81,8 @@ public class UserMealsUtil {
                             int sumOfCalories = entry.getValue().stream().mapToInt(UserMeal::getCalories).sum();
                             return entry.getValue().stream().filter(meal ->
                                     TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
-                                    .map(meal -> new UserMealWithExceed(meal.getDateTime(), meal.getDescription(),
-                                            meal.getCalories(),
+                                    .map(meal -> new UserMealWithExceed(meal.getDateTime(),
+                                            meal.getDescription(), meal.getCalories(),
                                             sumOfCalories > caloriesPerDay))
                                     .collect(Collectors.toList());})
                 .flatMap(Collection::stream)
@@ -98,7 +98,7 @@ public class UserMealsUtil {
 
     private static void populateList() {
         mealListTest = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 10000; i++) {
             Random random = new Random();
             int day = 1 + random.nextInt(30);
             mealListTest.add(new UserMeal(LocalDateTime.of(
