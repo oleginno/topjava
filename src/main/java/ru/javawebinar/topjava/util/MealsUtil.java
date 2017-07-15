@@ -27,7 +27,7 @@ public class MealsUtil {
     }
 
     private static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
-        return new MealWithExceed(UUID.randomUUID().toString(), meal.getDateTime(), meal.getDescription(),
+        return new MealWithExceed(meal.getDateTime(), meal.getDescription(),
                 meal.getCalories(), exceeded);
     }
 }

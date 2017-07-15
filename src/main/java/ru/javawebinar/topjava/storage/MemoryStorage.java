@@ -15,7 +15,7 @@ public class MemoryStorage implements IStorage {
 
     private static MemoryStorage memoryStorage;
 
-    private Map<String, Meal> meals;
+    private final Map<String, Meal> meals;
 
     public static MemoryStorage get() {
         if (memoryStorage == null) {
@@ -27,16 +27,16 @@ public class MemoryStorage implements IStorage {
     private MemoryStorage() {
         meals = new ConcurrentHashMap<>();
         Random random = new Random(47);
-        
+
         for (int i = 0; i < 29; i++) {
             int day = 1 + random.nextInt(30);
             int hour = 1 + random.nextInt(23);
             int minute = 1 + random.nextInt(59);
             int second = 1 + random.nextInt(59);
-            
+
             String id = UUID.randomUUID().toString();
             meals.put(id, new Meal(id, LocalDateTime.of(
-                    2017, Month.JULY, day, hour, minute, second),"Test meal" + i,
+                    2017, Month.JULY, day, hour, minute, second), "Test meal" + i,
                     (int) (Math.random() * (500 - 35)) + 35));
         }
     }
@@ -44,42 +44,57 @@ public class MemoryStorage implements IStorage {
 
     @Override
     public void clear() {
-        meals.clear();
+        synchronized (meals) {
+            meals.clear();
+        }
     }
 
     @Override
     public void save(Meal meal) {
-        meals.putIfAbsent(UUID.randomUUID().toString(), meal);
+        synchronized (meals) {
+            meals.putIfAbsent(UUID.randomUUID().toString(), meal);
+        }
     }
 
     @Override
     public void update(String id, Meal meal) {
-        meals.replace(id, meal);
+        synchronized (meals) {
+            meals.replace(id, meal);
+        }
     }
 
     @Override
     public Meal load(String id) {
-        return meals.get(id);
+        synchronized (meals) {
+            return meals.get(id);
+        }
     }
 
     @Override
     public void delete(String id) {
-        meals.remove(id);
+        synchronized (meals) {
+            meals.remove(id);
+        }
     }
 
-
     public boolean exist(String id) {
-        return meals.containsKey(id);
+        synchronized (meals) {
+            return meals.containsKey(id);
+        }
     }
 
     public List<Meal> getList() {
-        List<Meal> list = new ArrayList<>();
-        list.addAll(meals.values());
+        synchronized (meals) {
+            List<Meal> list = new ArrayList<>();
+            list.addAll(meals.values());
 
-        return list;
+            return list;
+        }
     }
 
     public int size() {
-        return meals.size();
+        synchronized (meals) {
+            return meals.size();
+        }
     }
 }

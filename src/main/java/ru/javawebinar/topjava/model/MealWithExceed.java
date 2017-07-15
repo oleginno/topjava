@@ -1,14 +1,10 @@
 package ru.javawebinar.topjava.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class MealWithExceed implements Serializable, Comparable<MealWithExceed> {
-    static final long serialVersionUID = 1L;
-
-    private final String id;
+public class MealWithExceed implements Comparable<MealWithExceed> {
 
     private final LocalDateTime dateTime;
 
@@ -18,18 +14,13 @@ public class MealWithExceed implements Serializable, Comparable<MealWithExceed> 
 
     private final boolean exceed;
 
-    public MealWithExceed(String uuid, LocalDateTime dateTime, String description, int calories, boolean exceed) {
-        this.id = uuid;
+    public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
         this.exceed = exceed;
     }
 
-
-    public String getId() {
-        return id;
-    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -54,14 +45,13 @@ public class MealWithExceed implements Serializable, Comparable<MealWithExceed> 
         if (o == null || getClass() != o.getClass()) return false;
         MealWithExceed that = (MealWithExceed) o;
         return getCalories() == that.getCalories() &&
-                Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDateTime(), that.getDateTime()) &&
                 Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDateTime(), getDescription());
+        return Objects.hash(getDateTime(), getDescription());
     }
 
     @Override
@@ -71,6 +61,6 @@ public class MealWithExceed implements Serializable, Comparable<MealWithExceed> 
 
     @Override
     public int compareTo(MealWithExceed o) {
-        return this.getId().compareTo(o.getId());
+        return this.getDescription().compareTo(o.getDescription());
     }
 }
