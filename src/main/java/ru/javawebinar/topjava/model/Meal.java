@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.UUID;
 
 
 public class Meal implements Serializable {
@@ -19,8 +18,8 @@ public class Meal implements Serializable {
 
     private final int calories;
 
-    public Meal(LocalDateTime dateTime, String description, int calories) {
-        this.id = UUID.randomUUID().toString();
+    public Meal(String uuid, LocalDateTime dateTime, String description, int calories) {
+        this.id = uuid;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

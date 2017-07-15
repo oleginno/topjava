@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 
 public class MealWithExceed implements Serializable, Comparable<MealWithExceed> {
@@ -19,8 +18,8 @@ public class MealWithExceed implements Serializable, Comparable<MealWithExceed> 
 
     private final boolean exceed;
 
-    public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
-        this.id = UUID.randomUUID().toString();
+    public MealWithExceed(String uuid, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        this.id = uuid;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

@@ -2,8 +2,11 @@ package ru.javawebinar.topjava.storage;
 
 import ru.javawebinar.topjava.model.Meal;
 
-import javax.servlet.ServletContext;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,18 +19,28 @@ public class MemoryStorage implements IStorage {
 
     private Map<String, Meal> meals;
 
-    public static MemoryStorage get(ServletContext servletContext) {
+    public static MemoryStorage get() {
         if (memoryStorage == null) {
-            memoryStorage = new MemoryStorage(servletContext);
+            memoryStorage = new MemoryStorage();
         }
         return memoryStorage;
     }
 
-    private MemoryStorage(ServletContext servletContext) {
+    private MemoryStorage() {
         meals = new ConcurrentHashMap<>();
-        for (int i = 0; i < 15; i++) {
-//            Meal meal = new Meal();
-//            meals.put(meal);
+        Random random = new Random(47);
+        
+        for (int i = 0; i < 29; i++) {
+            int day = 1 + random.nextInt(30);
+            int hour = 1 + random.nextInt(23);
+            int minute = 1 + random.nextInt(59);
+            int second = 1 + random.nextInt(59);
+            
+            String id = UUID.randomUUID().toString();
+            
+            meals.put(id, new Meal(id, LocalDateTime.of(
+                    2017, Month.JULY, day, hour, minute, second),
+                    "Test meal" + i, (int) (Math.random() * (500 - 35)) + 35));
         }
     }
 
