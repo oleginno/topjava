@@ -13,27 +13,25 @@ import java.util.stream.Collectors;
 
 public class MealsUtil {
 
-    private static List<Meal> mealListTest;
-
-    public static void main(String[] args) {
-        List<Meal> mealList = Arrays.asList(
-                new Meal(LocalDateTime.of(2015, Month.MAY, 30,10,0),
-                        "Завтрак", 500),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 30,13,0),
-                        "Обед", 1000),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 30,20,0),
-                        "Ужин", 500),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 31,10,0),
-                        "Завтрак", 1000),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 31,13,0),
-                        "Обед", 500),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 31,20,0),
-                        "Ужин", 510)
-        );
-
-        System.out.println(getFilteredWithExceeded(mealList, LocalTime.of(7, 0),
-                LocalTime.of(19,0), 1900));
-    }
+//    public static void main(String[] args) {
+//        List<Meal> mealList = Arrays.asList(
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 30,10,0),
+//                        "Завтрак", 500),
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 30,13,0),
+//                        "Обед", 1000),
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 30,20,0),
+//                        "Ужин", 500),
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 31,10,0),
+//                        "Завтрак", 1000),
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 31,13,0),
+//                        "Обед", 500),
+//                new Meal(LocalDateTime.of(2015, Month.MAY, 31,20,0),
+//                        "Ужин", 510)
+//        );
+//
+//        System.out.println(getFilteredWithExceeded(mealList, LocalTime.of(7, 0),
+//                LocalTime.of(19,0), 1900));
+//    }
 
     public static List<MealWithExceed> getFilteredWithExceeded(List<Meal> meals, LocalTime startTime,
                                                                LocalTime endTime, int caloriesPerDay) {
@@ -49,9 +47,9 @@ public class MealsUtil {
                 .collect(Collectors.toList());
     }
 
-    private static void printExceeded(List<MealWithExceed> mealWithExceeds) {
-        mealWithExceeds.stream()
-                .filter(meal -> !meal.isExceed())
-                .forEach(System.out::println);
-    }
+//    private static void printExceeded(List<MealWithExceed> mealWithExceeds) {
+//        mealWithExceeds.stream()
+//                .filter(meal -> !meal.isExceed())
+//                .forEach(System.out::println);
+//    }
 }
