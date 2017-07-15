@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.slf4j.LoggerFactory.getLogger;  // !!!
+import static org.slf4j.LoggerFactory.getLogger;
 
-
-public class UserServlet extends HttpServlet {
+/**
+ * Oleh Savych
+ * 15.07.17
+ */
+public class MealServlet extends HttpServlet {
 
     private static final Logger log = getLogger(UserServlet.class);
 
@@ -20,6 +23,6 @@ public class UserServlet extends HttpServlet {
                                                                                           IOException {
         log.debug("redirect to users");
 
-//        request.getRequestDispatcher("/users.jsp").forward(request, response);
+        //request.getRequestDispatcher("/users.jsp").forward(request, response);
     }
 }

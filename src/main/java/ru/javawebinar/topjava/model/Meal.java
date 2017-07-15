@@ -1,11 +1,18 @@
 package ru.javawebinar.topjava.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
+import java.util.UUID;
 
 
-public class Meal {
+public class Meal implements Serializable {
+    static final long serialVersionUID = 1L;
+
+    private final String id;
+
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -13,9 +20,15 @@ public class Meal {
     private final int calories;
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
+        this.id = UUID.randomUUID().toString();
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     public LocalDateTime getDateTime() {
@@ -36,5 +49,22 @@ public class Meal {
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Meal meal = (Meal) o;
+        return getCalories() == meal.getCalories() &&
+                Objects.equals(getId(), meal.getId()) &&
+                Objects.equals(getDateTime(), meal.getDateTime()) &&
+                Objects.equals(getDescription(), meal.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDateTime(), getDescription(), getCalories());
     }
 }
