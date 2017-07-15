@@ -12,7 +12,7 @@ public interface IStorage {
 
     void save(Meal meal);
 
-    void update(Meal meal);
+    void update(String uuid, Meal meal);
 
     Meal load(String uuid);
 
