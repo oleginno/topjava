@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
+import ru.javawebinar.topjava.storage.MemoryStorage;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +17,18 @@ import static org.slf4j.LoggerFactory.getLogger;
  * 15.07.17
  */
 public class MealServlet extends HttpServlet {
-
-    private static final Logger log = getLogger(UserServlet.class);
+    //private static final Logger log = getLogger(MealServlet.class);
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
                                                                                           IOException {
-        log.debug("redirect to users");
+        request.setCharacterEncoding("UTF-8");
 
-        //request.getRequestDispatcher("/users.jsp").forward(request, response);
+        request.setAttribute("meals", MealsUtil.getFilteredWithExceeded(MemoryStorage.get().getList(),
+                Integer.parseInt(request.getParameter("caloriesLimit"))));
+
+        request.getRequestDispatcher("/topjava/meals.jsp").forward(request, response);
+
+        //log.debug("redirect to meals");
     }
 }

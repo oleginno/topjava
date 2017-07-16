@@ -1,10 +1,14 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Objects;
 
 
 public class MealWithExceed implements Comparable<MealWithExceed> {
+
+    private final String id;
 
     private final LocalDateTime dateTime;
 
@@ -14,13 +18,18 @@ public class MealWithExceed implements Comparable<MealWithExceed> {
 
     private final boolean exceed;
 
-    public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
+    public MealWithExceed(String id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
         this.exceed = exceed;
     }
 
+
+    public String getId() {
+        return id;
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -36,6 +45,10 @@ public class MealWithExceed implements Comparable<MealWithExceed> {
 
     public boolean isExceed() {
         return exceed;
+    }
+
+    public String getFormattedDateTime() {
+        return dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yy,  (HH:mm)"));
     }
 
 

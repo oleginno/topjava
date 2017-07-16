@@ -7,23 +7,46 @@
 
     <display-name>Calories Management</display-name>
 
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+
+    <error-page>
+        <exception-type>java.lang.NumberFormatException</exception-type>
+        <location>/WEB-INF/jsp/exceptionNumberFormat.jsp</location>
+    </error-page>
+
+
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>mealsServlet</servlet-name>
+        <servlet-name>mealServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.MealServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>mealsList</servlet-name>
+        <jsp-file>/WEB-INF/jsp/meals.jsp</jsp-file>
+    </servlet>
+
+
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <url-pattern>/topjava/users</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>mealsServlet</servlet-name>
-        <url-pattern>/meals</url-pattern>
+        <servlet-name>mealServlet</servlet-name>
+        <url-pattern>/topjava/mealServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>mealsList</servlet-name>
+        <url-pattern>/topjava/meals.jsp</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -25,7 +25,7 @@ public class MemoryStorage implements IStorage {
     }
 
     private MemoryStorage() {
-        meals = new ConcurrentHashMap<>();
+        meals = new ConcurrentHashMap<>(32);
         Random random = new Random(47);
 
         for (int i = 0; i < 29; i++) {
@@ -36,7 +36,7 @@ public class MemoryStorage implements IStorage {
 
             String id = UUID.randomUUID().toString();
             meals.put(id, new Meal(id, LocalDateTime.of(
-                    2017, Month.JULY, day, hour, minute, second), "Test meal" + i,
+                    2017, Month.JULY, day, hour, minute, second), "Meal № " + i,
                     (int) (Math.random() * (500 - 35)) + 35));
         }
     }
