@@ -25,19 +25,19 @@ public class MemoryStorage implements IStorage {
     }
 
     private MemoryStorage() {
-        meals = new ConcurrentHashMap<>(32);
+        meals = new ConcurrentHashMap<>(128);
         Random random = new Random(47);
 
-        for (int i = 0; i < 29; i++) {
-            int day = 1 + random.nextInt(30);
-            int hour = 1 + random.nextInt(23);
-            int minute = 1 + random.nextInt(59);
-            int second = 1 + random.nextInt(59);
+        for (int i = 1; i < 101; i++) {
+            int day = 1 + random.nextInt(31);
+            int hour = 1 + random.nextInt(24);
+            int minute = 1 + random.nextInt(60);
+            int second = 1 + random.nextInt(60);
 
             String id = UUID.randomUUID().toString();
             meals.put(id, new Meal(id, LocalDateTime.of(
-                    2017, Month.JULY, day, hour, minute, second), "Meal № " + i,
-                    (int) (Math.random() * (500 - 35)) + 35));
+                    2017, Month.JULY, day, hour, minute, second), "Meal - " + i,
+                    (int) (Math.random() * (400 - 35)) + 35));
         }
     }
 
