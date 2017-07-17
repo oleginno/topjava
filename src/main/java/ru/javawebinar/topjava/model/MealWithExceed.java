@@ -27,27 +27,27 @@ public class MealWithExceed implements Comparable<MealWithExceed> {
     }
 
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public LocalDateTime getDateTime() {
+    public final LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public int getCalories() {
+    public final int getCalories() {
         return calories;
     }
 
-    public boolean isExceed() {
+    public final boolean isExceed() {
         return exceed;
     }
 
-    public String getFormattedDateTime() {
+    public final String getFormattedDateTime() {
         return dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yy,  (HH:mm)"));
     }
 

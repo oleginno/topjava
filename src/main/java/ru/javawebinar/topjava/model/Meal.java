@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -26,24 +25,20 @@ public class Meal implements Serializable {
     }
 
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public LocalDateTime getDateTime() {
+    public final LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public int getCalories() {
+    public final int getCalories() {
         return calories;
-    }
-
-    public LocalDate getDate() {
-        return dateTime.toLocalDate();
     }
 
     public LocalTime getTime() {
