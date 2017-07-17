@@ -19,7 +19,7 @@ public class MealsUtil {
                 .map(mealList -> {
                     boolean exceeded = mealList.stream().mapToInt(Meal::getCalories).sum() > caloriesPerDay;
                     return mealList.stream()
-                            //.filter(meal -> TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
+                            //.filter(meal -> DateTimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
                             .map(meal -> createWithExceed(meal, exceeded));
                 })
                 .flatMap(Function.identity())
@@ -27,7 +27,7 @@ public class MealsUtil {
     }
 
     private static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
-        return new MealWithExceed(meal.getId(), meal.getDateTime(), meal.getDescription(),
-                meal.getCalories(), exceeded);
+        return new MealWithExceed(meal.getId(), DateTimeUtil.getFormattedDateTime(meal.getDateTime()),
+                meal.getDescription(), meal.getCalories(), exceeded);
     }
 }

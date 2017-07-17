@@ -26,18 +26,18 @@
                     <th width="150">Date</th>
                     <th width="170">Description</th>
                     <th width="55">Calories</th>
-                    <th width="35">DEL</th>
-                    <th width="30">EDIT</th>
+                    <th width="40">DEL</th>
+                    <th width="40">EDIT</th>
                 </tr>
                 <c:forEach items="${requestScope.meals}" var="meal" varStatus="mealLoopCount">
                     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
 
-                    <tr style="color: ${meal.exceed ? 'red' : 'green'}">
+                    <tr style="color: ${meal.exceed ? 'red' : 'limegreen'}">
                         <td align="center">
                                 ${mealLoopCount.count}
                         </td>
                         <td>
-                                ${meal.formattedDateTime}
+                                ${meal.dateTime}
                         </td>
                         <td>
                                 ${meal.description}
