@@ -45,11 +45,12 @@ public class MealServlet extends HttpServlet {
         }
 
         updateMealList(request);
-        request.getRequestDispatcher("meals.jsp").forward(request, response);
+        //request.getRequestDispatcher("meals.jsp").forward(request, response);
+        response.sendRedirect("/topjava/meals.jsp");
 
         //request.setAttribute("resume", r);
 
-//        request.getRequestDispatcher(("view2".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp"))
+//        request.getRequestDispatcher(("view2".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/editMeal.jsp"))
 //                .forward(request, response);
 //
 //        view.forward(request, response);
@@ -74,6 +75,7 @@ public class MealServlet extends HttpServlet {
     private void updateMealList(HttpServletRequest request) {
         meals = MealsUtil.getFilteredWithExceeded(MemoryStorage.get().getList(), caloriesLimit);
         meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
-        request.setAttribute("meals", meals);
+        //request.setAttribute("meals", meals);
+        request.getSession(true).setAttribute("meals", meals);
     }
 }
