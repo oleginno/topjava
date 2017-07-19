@@ -29,7 +29,7 @@
                     <th width="40">DEL</th>
                     <th width="40">EDIT</th>
                 </tr>
-                <c:forEach items="${sessionScope.meals}" var="meal" varStatus="mealLoopCount">
+                <c:forEach items="${requestScope.meals}" var="meal" varStatus="mealLoopCount">
                     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
 
                     <tr style="color: ${meal.exceed ? 'red' : 'limegreen'}">
@@ -46,15 +46,32 @@
                                 ${meal.calories}
                         </td>
                         <td align="center">
-                            <a href="mealServlet?id=${meal.id}&action=delete">
-                                <img src="${pageContext.request.contextPath}/img/del.png" width="15" height="15">
-                            </a>
+                            <%--<a href="mealServlet?id=${meal.id}&action=delete">--%>
+                                <%--<img src="${pageContext.request.contextPath}/img/del.png" width="15" height="15">--%>
+                            <%--</a>--%>
+                                <form action="mealServlet" method="post">
+                                    <button name="delete" value="delete">
+                                        <img src="${pageContext.request.contextPath}/img/del.png" width="20" height="20">
+                                    </button>
+                                    <input type="hidden" name="id" value="${meal.id}">
+                                    <input type="hidden" name="action" value="delete">
+                                </form>
                         </td>
                         <td align="center">
-                            <a href="${pageContext.request.contextPath}/topjava/editMeal.jsp?
-                            id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}&calories=${meal.calories}&action=edit">
-                                <img src="${pageContext.request.contextPath}/img/edit.png" width="22" height="22">
-                            </a>
+                            <%--<a href="${pageContext.request.contextPath}/topjava/editMeal.jsp?--%>
+                            <%--id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}&calories=${meal.calories}&action=edit">--%>
+                                <%--<img src="${pageContext.request.contextPath}/img/edit.png" width="22" height="22">--%>
+                            <%--</a>--%>
+                                <form action="${pageContext.request.contextPath}/topjava/editMeal.jsp" method="POST">
+                                    <button name="edit" value="edit">
+                                        <img src="${pageContext.request.contextPath}/img/edit.png" width="25" height="25">
+                                    </button>
+                                    <input type="hidden" name="id" value="${meal.id}">
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="dateTime" value="${meal.dateTime}">
+                                    <input type="hidden" name="description" value="${meal.description}">
+                                    <input type="hidden" name="calories" value="${meal.calories}">
+                                </form>
                         </td>
                     </tr>
                 </c:forEach>
