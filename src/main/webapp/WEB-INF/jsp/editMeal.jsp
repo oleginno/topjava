@@ -11,12 +11,9 @@
 
 <html>
 <head>
-    <%--<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed" scope="request"/>--%>
-        <%--<c:set var="meal" value="${param.id}" />--%>
     <title>
         Meal Data Editing: ${param["description"]}
     </title>
-        <%--<input type="datetime-local" value="${meal.dateTime}" name="time">--%>
 </head>
 <body>
 <section>
@@ -42,5 +39,3 @@
 </section>
 </body>
 </html>
-
-<%--datetime-local--%>

@@ -14,9 +14,19 @@
 <table align="center">
     <tr>
         <td colspan="6" style="text-align: right"><a
-                href="${pageContext.request.contextPath}/topjava/addMeal.jsp?action=add">
-            <img src="${pageContext.request.contextPath}/img/add.png" width="55" height="55">
-        </a></td>
+                <%--href="${pageContext.request.contextPath}/topjava/addMeal.jsp?action=add">--%>
+                <%--<img src="${pageContext.request.contextPath}/img/add.png" width="55" height="55">--%>
+                <%--</a></td>--%>
+            <form action="${pageContext.request.contextPath}/topjava/editMeal.jsp" method="POST">
+                <button name="edit" value="edit">
+                    <img src="${pageContext.request.contextPath}/img/edit.png" width="25" height="25">
+                </button>
+                <input type="hidden" name="id" value="${meal.id}">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="dateTime" value="${meal.dateTime}">
+                <input type="hidden" name="description" value="${meal.description}">
+                <input type="hidden" name="calories" value="${meal.calories}">
+            </form>
     </tr>
     <tr>
         <td>
@@ -46,9 +56,6 @@
                                 ${meal.calories}
                         </td>
                         <td align="center">
-                            <%--<a href="mealServlet?id=${meal.id}&action=delete">--%>
-                                <%--<img src="${pageContext.request.contextPath}/img/del.png" width="15" height="15">--%>
-                            <%--</a>--%>
                                 <form action="mealServlet" method="post">
                                     <button name="delete" value="delete">
                                         <img src="${pageContext.request.contextPath}/img/del.png" width="20" height="20">
