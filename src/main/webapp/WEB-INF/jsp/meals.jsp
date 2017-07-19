@@ -29,12 +29,12 @@
                     <th width="40">DEL</th>
                     <th width="40">EDIT</th>
                 </tr>
-                <c:forEach items="${sessionScope.meals}" var="meal" varStatus="mealLoopCount">
+                <c:forEach items="${sessionScope.meals}" var="meal">
                     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
 
                     <tr style="color: ${meal.exceed ? 'red' : 'limegreen'}">
                         <td align="center">
-                                ${mealLoopCount.count}
+                                ${meal.id}
                         </td>
                         <td>
                                 ${meal.dateTime}

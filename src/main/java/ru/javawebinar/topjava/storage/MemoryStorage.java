@@ -34,8 +34,8 @@ public class MemoryStorage implements IStorage {
             int minute = 1 + random.nextInt(59);
             int second = 1 + random.nextInt(59);
 
-            String id = UUID.randomUUID().toString();
-            meals.put(id, new Meal(id, LocalDateTime.of(
+            //String id = UUID.randomUUID().toString();
+            meals.put(Meal.getAndIncrementCounter(), new Meal(LocalDateTime.of(
                     2017, Month.JULY, day, hour, minute, second), "Meal - " + i,
                     (int) (Math.random() * (400 - 35)) + 35));
         }
@@ -52,7 +52,7 @@ public class MemoryStorage implements IStorage {
     @Override
     public void save(Meal meal) {
         synchronized (meals) {
-            meals.putIfAbsent(UUID.randomUUID().toString(), meal);
+            meals.putIfAbsent(Meal.getAndIncrementCounter(), meal);
         }
     }
 

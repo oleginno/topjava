@@ -20,11 +20,6 @@
 
 
     <servlet>
-        <servlet-name>userServlet</servlet-name>
-        <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <servlet-name>mealServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.MealServlet</servlet-class>
     </servlet>
@@ -44,11 +39,6 @@
         <jsp-file>/WEB-INF/jsp/addMeal.jsp</jsp-file>
     </servlet>
 
-
-    <servlet-mapping>
-        <servlet-name>userServlet</servlet-name>
-        <url-pattern>/topjava/users</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>mealServlet</servlet-name>

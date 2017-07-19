@@ -1,10 +1,9 @@
 package ru.javawebinar.topjava.model;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class MealWithExceed implements Comparable<MealWithExceed> {
+public class MealWithExceed {
 
     private final String id;
 
@@ -65,9 +64,9 @@ public class MealWithExceed implements Comparable<MealWithExceed> {
     public String toString() {
         return "{" + dateTime + " " + description + " " + calories + " " + isExceed() + "}";
     }
-
-    @Override
-    public int compareTo(MealWithExceed o) {
-        return this.getDescription().compareTo(o.getDescription());
-    }
+//
+//    @Override
+//    public int compareTo(MealWithExceed o) {
+//        return this.getDescription().compareTo(o.getDescription());
+//    }
 }
