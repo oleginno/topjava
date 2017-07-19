@@ -20,11 +20,12 @@
 </head>
 <body>
 <section>
-    <form id="meal" method="GET" action="mealServlet">
+    <form id="meal" method="POST" action="mealServlet">
+        <input type="hidden" name="action" value="edit">
         <input type="hidden" name="id" value="${param["id"]}">
         <dl>
             <dt>Date/Time:</dt>
-            <dd><input type="text" name="dateTime" size=70 value="${param["dateTime"]}"></dd>
+            <dd><input name="dateTime" size=70 value="${param["dateTime"]}"></dd>
         </dl>
         <dl>
             <dt>Description:</dt>
@@ -32,7 +33,7 @@
         </dl>
         <dl>
             <dt>Calories:</dt>
-            <dd><input type="number" name="calories" size=70 value="${param["calories"]}"></dd>
+            <dd><input name="calories" type="number" min="1" size=70 value="${param["calories"]}"></dd>
         </dl>
         <hr>
         <button>Save</button>
