@@ -6,15 +6,15 @@ import ru.javawebinar.topjava.model.Meal;
  * Oleh Savych
  * 15.07.17
  */
-public interface IStorage {
+public interface IDao {
 
     void clear();
 
     void save(Meal meal);
 
-    void update(String uuid, Meal meal);
+    void update(String id, Meal meal);
 
-    Meal load(String uuid);
+    Meal load(String id);
 
-    void delete(String uuid);
+    void delete(String id);
 }
