@@ -17,8 +17,8 @@ public class Meal implements Serializable {
 
     private final int calories;
 
-    public Meal(String uuid, LocalDateTime dateTime, String description, int calories) {
-        this.id = uuid;
+    public Meal(String id, LocalDateTime dateTime, String description, int calories) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -60,5 +60,14 @@ public class Meal implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDateTime(), getDescription(), getCalories());
+    }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}';
     }
 }
