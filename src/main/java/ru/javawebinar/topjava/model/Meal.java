@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Meal implements Serializable {
+
     static final long serialVersionUID = 1L;
+
+    private static AtomicInteger count;
 
     private final String id;
 
@@ -17,11 +21,18 @@ public class Meal implements Serializable {
 
     private final int calories;
 
-    public Meal(String uuid, LocalDateTime dateTime, String description, int calories) {
-        this.id = uuid;
+
+    static {
+        count = new AtomicInteger();
+    }
+
+
+    public Meal(String id, LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        count.getAndIncrement();
+        this.id = "" + count.intValue();
     }
 
 
