@@ -13,15 +13,9 @@
 <table align="center">
     <tr>
         <td colspan="6" style="text-align: right">
-            <a href="${pageContext.request.contextPath}/topjava/addMeal.jsp?action=add">
+            <a href="${pageContext.request.contextPath}addMeal.jsp?action=add">
                 <img src="${pageContext.request.contextPath}/img/add.png" width="55" height="55">
             </a>
-                <%--<form action="${pageContext.request.contextPath}/topjava/addMeal.jsp" method="POST">--%>
-                    <%--<button name="add" value="add">--%>
-                        <%--<img src="${pageContext.request.contextPath}/img/add.png" width="47" height="47">--%>
-                    <%--</button>--%>
-                    <%--<input type="hidden" name="action" value="add">--%>
-                <%--</form>--%>
         </td>
     </tr>
     <tr>
@@ -52,7 +46,10 @@
                                 ${meal.calories}
                         </td>
                         <td align="center">
-                            <form action="mealServlet" method="post">
+                                <%--<a href="${pageContext.request.contextPath}mealServlet?id=${meal.id}&action=delete">--%>
+                                <%--<img src="${pageContext.request.contextPath}/img/del.png" width="15" height="15">--%>
+                                <%--</a>--%>
+                            <form action="${pageContext.request.contextPath}mealServlet" method="post">
                                 <button name="delete" value="delete">
                                     <img src="${pageContext.request.contextPath}/img/del.png" width="20" height="20">
                                 </button>
@@ -61,11 +58,12 @@
                             </form>
                         </td>
                         <td align="center">
-                                <%--<a href="${pageContext.request.contextPath}/topjava/editMeal.jsp?--%>
-                                <%--id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}&calories=${meal.calories}&action=edit">--%>
-                                <%--<img src="${pageContext.request.contextPath}/img/edit.png" width="22" height="22">--%>
+                                <%--<a href="${pageContext.request.contextPath}editMeal.jsp?--%>
+                                <%--id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}&--%>
+                                <%--calories=${meal.calories}&action=edit">--%>
+                                <%--<img src="${pageContext.request.contextPath}/img/edit.png" width="23" height="23">--%>
                                 <%--</a>--%>
-                            <form action="${pageContext.request.contextPath}/topjava/editMeal.jsp" method="POST">
+                            <form action="${pageContext.request.contextPath}editMeal.jsp" method="POST">
                                 <button name="edit" value="edit">
                                     <img src="${pageContext.request.contextPath}/img/edit.png" width="25" height="25">
                                 </button>

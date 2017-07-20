@@ -26,7 +26,7 @@ public class MealsUtil {
 
     private static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
         return new MealWithExceed(meal.getId(),
-                DateTimeUtil.getFormattedDateTime(meal.getDateTime(), DateTimeUtil.formatter),
+                DateTimeUtil.getFormattedDateTime(meal.getDateTime(), DateTimeUtil.FORMATTER),
                 meal.getDescription(), meal.getCalories(), exceeded);
     }
 }

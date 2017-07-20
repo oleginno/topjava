@@ -7,12 +7,12 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtil {
 
-    public final static DateTimeFormatter formatter;
-    public final static DateTimeFormatter formatterHtml5;
+    public static final DateTimeFormatter FORMATTER;
+    public final static DateTimeFormatter FORMATTER_HTML_5;
 
     static {
-        formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss");
-        formatterHtml5 = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss");
+        FORMATTER_HTML_5 = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     }
 
     public static boolean isBetween(LocalTime lt, LocalTime startTime, LocalTime endTime) {

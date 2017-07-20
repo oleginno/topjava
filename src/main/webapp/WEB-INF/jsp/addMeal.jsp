@@ -16,7 +16,7 @@
 </head>
 <body>
 <section>
-    <form action="mealServlet" method="POST" >
+    <form action="${pageContext.request.contextPath}mealServlet" method="POST" >
         <input type="hidden" name="action" value="add">
         <dl>
             <dt>Date/Time:</dt>
@@ -31,8 +31,8 @@
             <dd><input name="calories" type="number" value="" min="1" size=70></dd>
         </dl>
         <hr>
-        <button>Save</button>
-        <button onclick="window.history.back()">Cancel</button>
+        <button>SAVE</button>
+        <button onclick="window.history.back()">CANCEL</button>
     </form>
 </section>
 </body>
