@@ -66,7 +66,7 @@ public class MealServlet extends HttpServlet {
         meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
 
         request.setAttribute("meals", meals);
-        request.getRequestDispatcher("meals.jsp").forward(request, response);
+        request.getRequestDispatcher("Meals.jsp").forward(request, response);
         log.debug("redirect to meals");
     }
 }

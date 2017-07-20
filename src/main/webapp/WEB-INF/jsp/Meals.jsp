@@ -13,7 +13,7 @@
 <table align="center">
     <tr>
         <td colspan="6" style="text-align: right">
-            <a href="${pageContext.request.contextPath}addMeal.jsp?action=add">
+            <a href="${pageContext.request.contextPath}AddMeal.jsp?action=add">
                 <img src="${pageContext.request.contextPath}/img/add.png" width="55" height="55">
             </a>
         </td>
@@ -58,12 +58,12 @@
                             </form>
                         </td>
                         <td align="center">
-                                <%--<a href="${pageContext.request.contextPath}editMeal.jsp?--%>
+                                <%--<a href="${pageContext.request.contextPath}EditMeal.jsp?--%>
                                 <%--id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}&--%>
                                 <%--calories=${meal.calories}&action=edit">--%>
                                 <%--<img src="${pageContext.request.contextPath}/img/edit.png" width="23" height="23">--%>
                                 <%--</a>--%>
-                            <form action="${pageContext.request.contextPath}editMeal.jsp" method="POST">
+                            <form action="${pageContext.request.contextPath}EditMeal.jsp" method="POST">
                                 <button name="edit" value="edit">
                                     <img src="${pageContext.request.contextPath}/img/edit.png" width="25" height="25">
                                 </button>

@@ -15,7 +15,7 @@
 
     <error-page>
         <exception-type>java.lang.NumberFormatException</exception-type>
-        <location>/WEB-INF/jsp/exceptionNumberFormat.jsp</location>
+        <location>/WEB-INF/jsp/ExceptionNumberFormat.jsp</location>
     </error-page>
 
 
