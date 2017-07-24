@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.model;
 
+
 public class BaseEntity {
+
     protected Integer id;
 
     public BaseEntity() {
