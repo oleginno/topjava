@@ -4,7 +4,7 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>Topjava</display-name>
+    <display-name>TopJava</display-name>
 
     <servlet>
         <servlet-name>userServlet</servlet-name>
@@ -29,12 +29,12 @@
     <servlet>
         <servlet-name>authorizationServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.AuthorizationServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>authorizationServlet</servlet-name>
         <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
+
 
     <error-page>
         <exception-type>ru.javawebinar.topjava.util.exception.NotFoundException</exception-type>

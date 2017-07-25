@@ -21,10 +21,10 @@ public class MealsUtil {
 //            new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
 //            new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
 //    );
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
+    public static final int DEFAULT_CALORIES_PER_DAY = 750;
 
 
-    public static List<MealWithExceed> getFilteredWithExceeded(List<Meal> meals, /*LocalTime startTime,
+    public static List<MealWithExceed> getFilteredWithExceeded(Collection<Meal> meals, /*LocalTime startTime,
                                                                LocalTime endTime,*/ int caloriesPerDay) {
         return meals.stream()
                 .collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate())).values().stream()

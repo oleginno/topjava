@@ -18,8 +18,8 @@ public class MealRestController {
         this.service = service;
     }
 
-    public Meal create(Meal meal) {
-        return service.save(meal);
+    public void create(Meal meal) {
+        service.save(meal);
     }
 
     public void remove(int userId, int id) {

@@ -49,7 +49,7 @@ public class AuthorizationServlet extends HttpServlet {
             }
 
             request.setAttribute("userId", authorizedUser.getId());
-            request.getRequestDispatcher("/meals.jsp").forward(request, response);
+            request.getRequestDispatcher("meals").forward(request, response);
 
             log.debug("redirect to meals");
         }
