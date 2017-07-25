@@ -21,8 +21,8 @@ public class MealsUtil {
 //            new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
 //            new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
 //    );
-
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
+
 
     public static List<MealWithExceed> getFilteredWithExceeded(List<Meal> meals, /*LocalTime startTime,
                                                                LocalTime endTime,*/ int caloriesPerDay) {
@@ -37,7 +37,6 @@ public class MealsUtil {
                 .flatMap(Function.identity())
                 .collect(Collectors.toList());
     }
-
 
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
         return new MealWithExceed(meal.getId(), meal.getUserId(), meal.getDateTime(),
