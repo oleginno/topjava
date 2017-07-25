@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
@@ -64,11 +65,22 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public void update(int userId, int id, Meal meal) {
+        repository.get(userId).replace(id, meal);
+    }
+
+    @Override
     public Collection<Meal> getAll() {
         log.info("get all meals");
         return repository.values().stream()
                 .flatMap(m -> m.values().stream())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Meal> getAllByUser(int userId) {
+        log.info("get all meals of user with id: {}", userId);
+        return new ArrayList<>(repository.get(userId).values());
     }
 }
 

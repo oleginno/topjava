@@ -13,5 +13,10 @@ public interface MealRepository {
 
     Meal get(int userId, int id);
 
+    void update(int userId, int id, Meal meal);
+
     Collection<Meal> getAll();
+
+    Collection<Meal> getAllByUser(int userId);
 }
+

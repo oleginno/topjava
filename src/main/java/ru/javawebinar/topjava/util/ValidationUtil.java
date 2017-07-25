@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.util;
 
-
 import ru.javawebinar.topjava.model.BaseEntity;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+
 
 public class ValidationUtil {
 
