@@ -7,10 +7,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -21,31 +18,30 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
 
-    private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>(32);
+    private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>(264);
 
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
         Random random = new Random(29);
-        for (int i = 1; i < 31; i++) {
+        for (int i = 1; i < 201; i++) {
             int day = 1 + random.nextInt(31);
             int hour = 1 + random.nextInt(23);
             int minute = 1 + random.nextInt(59);
             int second = 1 + random.nextInt(59);
 
             Integer userId = i % 2 != 0 ? 1 : 2;
-            save(new Meal(null, userId, LocalDateTime.of(
-                    2017, Month.JULY, day, hour, minute, second), "Meal-" + i,
+            save(new Meal(counter.incrementAndGet(), userId, LocalDateTime.of(
+                    2017, Month.JULY, day, hour, minute, second),
+                    "Meal-" + i,
                     (int) (Math.random() * (500 - 25)) + 25));
         }
-
     }
+
 
     @Override
     public Meal save(Meal meal) {
-        if (meal.isNew()) {
-            meal.setId(counter.incrementAndGet());
-        }
+        repository.computeIfAbsent(meal.getUserId(), e -> new HashMap<>());
         repository.get(meal.getUserId()).put(meal.getId(), meal);
         log.info("saving meal: {}, {} ...", meal.getId(), meal.getDescription());
         return meal;
@@ -53,19 +49,28 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public void delete(int userId, int id) {
-        repository.get(userId).remove(id);
-        log.info("deleting meal: {} ...", id);
+        if (repository.get(userId) != null) {
+            repository.get(userId).remove(id);
+            log.info("deleting meal: {} ...", id);
+        }
     }
 
     @Override
     public Meal get(int userId, int id) {
-        log.info("get meal: {}", id);
-        return repository.get(userId).get(id);
+        if (repository.get(userId) != null) {
+            log.info("get meal: {}", id);
+            return repository.get(userId).get(id);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void update(int userId, int id, Meal meal) {
-        repository.get(userId).replace(id, meal);
+        if (repository.get(userId) != null) {
+            repository.get(userId).replace(id, meal);
+            log.info("updating meal: {} ...", id);
+        }
     }
 
     @Override
@@ -78,8 +83,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Collection<Meal> getAllByUser(int userId) {
-        log.info("get all meals of user with id: {}", userId);
-        return new ArrayList<>(repository.get(userId).values());
+        if (repository.get(userId) != null) {
+            log.info("get all meals of user with id: {}", userId);
+            return new ArrayList<>(repository.get(userId).values());
+        } else {
+            return null;
+        }
     }
 }
-

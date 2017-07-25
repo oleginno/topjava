@@ -36,4 +36,9 @@
         <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <exception-type>ru.javawebinar.topjava.util.exception.NotFoundException</exception-type>
+        <location>/WEB-INF/exceptionNotFound.jsp</location>
+    </error-page>
+
 </web-app>

@@ -18,11 +18,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     {
         save(new User(1, "Admin", "admin@admin.net", "1",
-                1700, true, new HashSet<>()));
+                600, true, new HashSet<>()));
         save(new User(2, "Regular", "user@regular.net", "2",
-                1800, true, new HashSet<>()));
+                700, true, new HashSet<>()));
         save(new User(3, "Guest", "user@guest.net", "3",
-                1900, true, new HashSet<>()));
+                800, true, new HashSet<>()));
     }
 
     @Override
@@ -54,9 +54,9 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User getByEmail(String email) {
         log.info("get user by email: {}", email);
-        return getAll().stream().
-                filter(user -> email.equals(user.getEmail())).
-                findFirst().
-                orElse(null);
+        return getAll().stream()
+                .filter(user -> email.equals(user.getEmail()))
+                .findFirst()
+                .orElse(null);
     }
 }
