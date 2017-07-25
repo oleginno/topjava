@@ -26,7 +26,6 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        //MealsUtil.MEALS.forEach(this::save);
         Random random = new Random(29);
         for (int i = 1; i < 31; i++) {
             int day = 1 + random.nextInt(31);

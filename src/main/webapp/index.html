@@ -3,13 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Calories Management </title>
+    <title>User Authorization</title>
 </head>
 <body>
 
-<h1 align="center"> Calories day limit </h1>
-<form action="mealServlet" method="POST">
-    Calories quantity: <input name="caloriesLimit">
+<h1 align="center">User Authorization</h1>
+
+<form action="authorization" method="POST">
+    Login: <input name="login" title="login">
+    <br/>
+    Password: <input type="password" name="password" title="password">
     <br/>
     <input type="submit" value="Submit"/>
 </form>

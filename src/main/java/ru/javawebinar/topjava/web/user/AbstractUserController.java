@@ -20,34 +20,34 @@ public abstract class AbstractUserController {
     private UserService service;
 
     public List<User> getAll() {
-        log.info("getAll");
+        log.info("Rest: getAll");
         return service.getAll();
     }
 
     public User get(int id) {
-        log.info("get {}", id);
+        log.info("Rest: get {}", id);
         return service.get(id);
     }
 
     public User create(User user) {
-        log.info("create {}", user);
+        log.info("Rest: create {}", user);
         checkNew(user);
         return service.save(user);
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
+        log.info("Rest: delete {}", id);
         service.delete(id);
     }
 
     public void update(User user, int id) {
-        log.info("update {} with id={}", user, id);
+        log.info("Rest: update {} with id={}", user, id);
         checkIdConsistent(user, id);
         service.update(user);
     }
 
     public User getByMail(String email) {
-        log.info("getByEmail {}", email);
+        log.info("Rest: getByEmail {}", email);
         return service.getByEmail(email);
     }
 }
