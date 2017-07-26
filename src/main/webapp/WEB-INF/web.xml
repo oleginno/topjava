@@ -35,10 +35,48 @@
         <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>mealList</servlet-name>
+        <jsp-file>/WEB-INF/jsp/meals.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mealList</servlet-name>
+        <url-pattern>/meals.jsp</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>mealForm</servlet-name>
+        <jsp-file>/WEB-INF/jsp/mealForm.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mealForm</servlet-name>
+        <url-pattern>/mealForm.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>notFound</servlet-name>
+        <jsp-file>/WEB-INF/jsp/exceptionNotFound.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>notFound</servlet-name>
+        <url-pattern>/notFound.jsp</url-pattern>
+    </servlet-mapping>
     <error-page>
         <exception-type>ru.javawebinar.topjava.util.exception.NotFoundException</exception-type>
-        <location>/WEB-INF/exceptionNotFound.jsp</location>
+        <location>/WEB-INF/jsp/exceptionNotFound.jsp</location>
+    </error-page>
+
+    <servlet>
+        <servlet-name>numberFormatError</servlet-name>
+        <jsp-file>/WEB-INF/jsp/exceptionNumberFormat.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>numberFormatError</servlet-name>
+        <url-pattern>/numberError.jsp</url-pattern>
+    </servlet-mapping>
+    <error-page>
+        <exception-type>java.lang.NumberFormatException</exception-type>
+        <location>/WEB-INF/jsp/exceptionNumberFormat.jsp</location>
     </error-page>
 
 </web-app>

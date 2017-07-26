@@ -18,7 +18,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
 
-    private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>(264);
+    private final Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>(264);
 
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -41,17 +41,21 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal save(Meal meal) {
-        repository.computeIfAbsent(meal.getUserId(), e -> new HashMap<>());
-        repository.get(meal.getUserId()).put(meal.getId(), meal);
-        log.info("saving meal: {}, {} ...", meal.getId(), meal.getDescription());
-        return meal;
+        synchronized (repository) {
+            repository.computeIfAbsent(meal.getUserId(), e -> new HashMap<>());
+            repository.get(meal.getUserId()).put(meal.getId(), meal);
+            log.info("saving meal: {}, {} ...", meal.getId(), meal.getDescription());
+            return meal;
+        }
     }
 
     @Override
     public void delete(int userId, int id) {
-        if (repository.get(userId) != null) {
-            repository.get(userId).remove(id);
-            log.info("deleting meal: {} ...", id);
+        synchronized (repository) {
+            if (repository.get(userId) != null) {
+                repository.get(userId).remove(id);
+                log.info("deleting meal: {} ...", id);
+            }
         }
     }
 
@@ -67,9 +71,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public void update(int userId, int id, Meal meal) {
-        if (repository.get(userId) != null) {
-            repository.get(userId).replace(id, meal);
-            log.info("updating meal: {} ...", id);
+        synchronized (repository) {
+            if (repository.get(userId) != null) {
+                repository.get(userId).replace(id, meal);
+                log.info("updating meal: {} ...", id);
+            }
         }
     }
 
