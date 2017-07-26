@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -83,8 +84,6 @@ public class MealServlet extends HttpServlet {
 //            default:
 //                log.info("getAll");
 //
-//                System.out.println(">" + mealRestController.getAllByUser(userId).size() + "<");
-//
 //                request.setAttribute("meals",
 //                        MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userId),
 //                                MealsUtil.DEFAULT_CALORIES_PER_DAY));
@@ -104,9 +103,8 @@ public class MealServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String userId = (String) request.getAttribute("userId");
+        int userId = (Integer) request.getAttribute("userId");
 
-        String id = request.getParameter("id");
         String action = request.getParameter("action");
 
         try (ConfigurableApplicationContext appCtx =
@@ -117,33 +115,44 @@ public class MealServlet extends HttpServlet {
             if (action != null) {
                 switch (action) {
                     case "delete":
-                        InMemoryMealRepositoryImpl.get().delete(id);
+                        mealRestController.remove(userId, getId(request));
+                        log.info("Delete button pressed for meal ID: {}", getId(request));
                         break;
                     case "add":
-                        InMemoryMealRepositoryImpl.get().save(new Meal(
-                                UUID.randomUUID().toString(),
-                                DateTimeUtil.getLocalDateTime(request.getParameter("dateTime"),
-                                        DateTimeUtil.FORMATTER_HTML_5),
-                                request.getParameter("description"),
-                                Integer.parseInt(request.getParameter("calories"))));
+                        mealRestController.create(createMeal(getId(request), userId, request));
+                        log.info("Added new meal with ID: {}", getId(request));
                         break;
                     case "edit":
-                        InMemoryMealRepositoryImpl.get().update(id, new Meal(id,
-                                DateTimeUtil.getLocalDateTime(request.getParameter("dateTime"), DateTimeUtil.FORMATTER),
-                                request.getParameter("description"),
-                                Integer.parseInt(request.getParameter("calories"))));
+                        mealRestController.update(userId, getId(request), createMeal(getId(request), userId, request));
+                        log.info("Changed meal with ID:{}, for User with ID:{}", getId(request), userId);
                         break;
                     default:
+                        log.info("Something wrong with ACTION parameter");
                         throw new IllegalArgumentException("Action " + action + " is illegal");
                 }
             }
-            List<MealWithExceed> meals = MealsUtil.getFilteredWithExceeded(InMemoryMealRepositoryImpl.get().getList(), caloriesLimit);
+
+            List<MealWithExceed> meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userId),
+                    MealsUtil.DEFAULT_CALORIES_PER_DAY);
             meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
 
             request.setAttribute("meals", meals);
-            request.getRequestDispatcher("Meals.jsp").forward(request, response);
+            request.getRequestDispatcher("meals.jsp").forward(request, response);
+
             log.debug("redirect to meals");
         }
     }
 
+    private Meal createMeal(int id, int userId, HttpServletRequest request) {
+        return new Meal(
+                id, userId,
+                LocalDateTime.parse(request.getParameter("dateTime")),
+                request.getParameter("description"),
+                Integer.valueOf(request.getParameter("calories")));
+    }
+
+    private int getId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("id"));
+        return Integer.valueOf(paramId);
+    }
 }
