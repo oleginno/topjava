@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,18 +22,6 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
 
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
-
-//    private MealRestController mealRestController;
-//
-//    @Override
-//    public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
-//        try (ConfigurableApplicationContext appCtx =
-//                     new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
-//            mealRestController = appCtx.getBean(MealRestController.class);
-//        }
-//    }
-//
 //    @Override
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response)
 //                                                        throws ServletException, IOException {
@@ -91,20 +78,12 @@ public class MealServlet extends HttpServlet {
 //                break;
 //        }
 //    }
-//
-//    private int getId(HttpServletRequest request) {
-//        String paramId = Objects.requireNonNull(request.getParameter("id"));
-//        return Integer.valueOf(paramId);
-//    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
                                                             throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
 
         int userId = (Integer) request.getAttribute("userId");
-
         String action = request.getParameter("action");
 
         try (ConfigurableApplicationContext appCtx =
@@ -118,17 +97,17 @@ public class MealServlet extends HttpServlet {
                         mealRestController.remove(userId, getId(request));
                         log.info("Delete button pressed for meal ID: {}", getId(request));
                         break;
-                    case "add":
-                        mealRestController.create(createMeal(getId(request), userId, request));
+                    case "create":
+                        mealRestController.create(createMeal(userId, request));
                         log.info("Added new meal with ID: {}", getId(request));
                         break;
                     case "edit":
-                        mealRestController.update(userId, getId(request), createMeal(getId(request), userId, request));
+                        mealRestController.update(userId, getId(request), createMeal(userId, request));
                         log.info("Changed meal with ID:{}, for User with ID:{}", getId(request), userId);
                         break;
                     default:
-                        log.info("Something wrong with ACTION parameter");
-                        throw new IllegalArgumentException("Action " + action + " is illegal");
+                        log.info("Something wrong with ACTION parameter!");
+                        throw new IllegalArgumentException("Action " + action + " is illegal!");
                 }
             }
 
@@ -138,14 +117,13 @@ public class MealServlet extends HttpServlet {
 
             request.setAttribute("meals", meals);
             request.getRequestDispatcher("meals.jsp").forward(request, response);
-
             log.debug("redirect to meals");
         }
     }
 
-    private Meal createMeal(int id, int userId, HttpServletRequest request) {
+    private Meal createMeal(int userId, HttpServletRequest request) {
         return new Meal(
-                id, userId,
+                getId(request), userId,
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
