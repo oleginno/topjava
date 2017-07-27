@@ -25,7 +25,6 @@
 </head>
 
 <body>
-*${param["userId"]}*
 <section>
     <h3><a href="${pageContext.request.contextPath}">Logout</a></h3>
     <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>

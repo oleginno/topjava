@@ -10,7 +10,6 @@
 
 <body>
 <h1 align="center">User Meals</h1>
-*${requestScope.userId}*
 <p>
 <table align="center">
     <tr>
