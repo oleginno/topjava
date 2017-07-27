@@ -93,7 +93,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
             log.info("get all meals of user with id: {}", userId);
             return new ArrayList<>(repository.get(userId).values());
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 }

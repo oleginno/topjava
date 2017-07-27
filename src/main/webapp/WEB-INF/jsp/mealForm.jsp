@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Meal</title>
+    <title>Meal Data</title>
     <style>
         dl {
             background: none repeat scroll 0 0 #FAFAFA;
@@ -23,28 +23,31 @@
         }
     </style>
 </head>
+
 <body>
+*${param["userId"]}*
 <section>
-    <h3><a href="../../index.html">Home</a></h3>
+    <h3><a href="${pageContext.request.contextPath}">Logout</a></h3>
     <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
     <hr>
-    <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <form method="post" action="meals">
-        <input type="hidden" name="id" value="${meal.id}">
+        <input type="hidden" name="action" value="${param["action"]}">
+        <input type="hidden" name="id" value="${param["id"]}">
+        <input type="hidden" name="userId" value="${param["userId"]}">
         <dl>
             <dt>DateTime:</dt>
-            <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime"></dd>
+            <dd><input type="datetime-local" value="${param["dateTime"]}" name="dateTime" title="Date/Time"></dd>
         </dl>
         <dl>
             <dt>Description:</dt>
-            <dd><input type="text" value="${meal.description}" size=40 name="description"></dd>
+            <dd><input value="${param["description"]}" size=40 name="description" title="Description"></dd>
         </dl>
         <dl>
             <dt>Calories:</dt>
-            <dd><input type="number" value="${meal.calories}" name="calories"></dd>
+            <dd><input type="number" value="${param["calories"]}" name="calories" title="Calories"></dd>
         </dl>
         <button>Save</button>
-        <button type="button" value="cancel" onclick="window.history.back()">Back</button>
+        <button type="button" value="cancel" onclick="window.history.back()">Cancel</button>
     </form>
 </section>
 </body>
