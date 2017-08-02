@@ -100,8 +100,8 @@ public class MealServlet extends HttpServlet {
         return paramId.length() < 1 ? null : Integer.valueOf(paramId);
     }
 
-    private List<MealWithExceed> updateMealList(int uId) {
-        List<MealWithExceed> meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(uId),
+    private List<MealWithExceed> updateMealList(int userId) {
+        List<MealWithExceed> meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userId),
                 MealsUtil.DEFAULT_CALORIES_PER_DAY);
         meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
         return meals;
