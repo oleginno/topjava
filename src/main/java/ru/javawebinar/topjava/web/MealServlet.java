@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +38,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                                                            throws ServletException, IOException {
+            throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
         List<MealWithExceed> meals;
@@ -45,10 +47,8 @@ public class MealServlet extends HttpServlet {
         if (request.getAttribute("userId") != null) {
             userId = (Integer) request.getAttribute("userId");
         }
-        meals = updateMealList(userId);
 
         String action = request.getParameter("action");
-
         if (action != null) {
             Integer userIdParam = Integer.valueOf(request.getParameter("userId"));
             request.setAttribute("userId", userIdParam);
@@ -67,14 +67,74 @@ public class MealServlet extends HttpServlet {
                             createMeal(userIdParam, request));
                     log.info("Changed meal with ID:{}, for User with ID:{}", getId(request), userIdParam);
                     break;
+                case "filter":
+                    String fromDate = request.getParameter("fromDate");
+                    String toDate = request.getParameter("toDate");
+                    String fromTime = request.getParameter("fromTime");
+                    String toTime = request.getParameter("toTime");
+
+                    if (!fromDate.trim().isEmpty() && !toDate.trim().isEmpty()
+                            && !fromTime.trim().isEmpty() && !toTime.trim().isEmpty()) {
+
+                        LocalDateTime start = LocalDateTime.of(
+                                LocalDate.parse(fromDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                                LocalTime.parse(fromTime, DateTimeFormatter.ofPattern("HH:mm")));
+                        LocalDateTime end = LocalDateTime.of(
+                                LocalDate.parse(toDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                                LocalTime.parse(toTime, DateTimeFormatter.ofPattern("HH:mm")));
+
+                        if (end.isAfter(start)) {
+                            meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userIdParam),
+                                    start, end, MealsUtil.DEFAULT_CALORIES_PER_DAY);
+                            sortAndSetMeals(meals, request);
+                        } else {
+                            throw new IllegalArgumentException("Error of date/time precedence");
+                        }
+                    } else if (!fromDate.trim().isEmpty() && !toDate.trim().isEmpty()
+                            && fromTime.trim().isEmpty() && toTime.trim().isEmpty()) {
+
+                        LocalDate start = LocalDate.parse(fromDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        LocalDate end = LocalDate.parse(toDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                        if (end.isAfter(start)) {
+                            meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userIdParam),
+                                    start, end, MealsUtil.DEFAULT_CALORIES_PER_DAY);
+                            sortAndSetMeals(meals, request);
+                        } else {
+                            throw new IllegalArgumentException("Error of date precedence");
+                        }
+                    } else if (fromDate.trim().isEmpty() && toDate.trim().isEmpty()
+                            && !fromTime.trim().isEmpty() && !toTime.trim().isEmpty()) {
+
+                        LocalTime start = LocalTime.parse(fromTime, DateTimeFormatter.ofPattern("HH:mm"));
+                        LocalTime end = LocalTime.parse(toTime, DateTimeFormatter.ofPattern("HH:mm"));
+
+                        if (end.isAfter(start)) {
+                            meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userIdParam),
+                                    start, end, MealsUtil.DEFAULT_CALORIES_PER_DAY);
+                            sortAndSetMeals(meals, request);
+                        } else {
+                            throw new IllegalArgumentException("Error of time precedence");
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Problem/problems with dates and/or times!");
+                    }
+                    log.info("Filtering by date and time");
+                    break;
                 default:
                     log.info("Something wrong with ACTION parameter!");
                     throw new IllegalArgumentException("Action " + action + " is illegal!");
             }
-            meals = updateMealList(userIdParam);
-        }
+            if (!"filter".equals(action)) {
+                meals = updateMealList(userIdParam);
+                request.setAttribute("meals", meals);
+            }
+        } else {
+            meals = updateMealList(userId);
 
-        request.setAttribute("meals", meals);
+            request.setAttribute("userId", userId);
+            request.setAttribute("meals", meals);
+        }
 
         request.getRequestDispatcher("meals.jsp").forward(request, response);
         log.debug("redirect to meals");
@@ -101,9 +161,14 @@ public class MealServlet extends HttpServlet {
     }
 
     private List<MealWithExceed> updateMealList(int userId) {
-        List<MealWithExceed> meals = MealsUtil.getFilteredWithExceeded(mealRestController.getAllByUser(userId),
+        List<MealWithExceed> meals = MealsUtil.getWithExceeded(mealRestController.getAllByUser(userId),
                 MealsUtil.DEFAULT_CALORIES_PER_DAY);
         meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
         return meals;
+    }
+
+    private void sortAndSetMeals(List<MealWithExceed> meals, HttpServletRequest request) {
+        meals.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
+        request.setAttribute("meals", meals);
     }
 }

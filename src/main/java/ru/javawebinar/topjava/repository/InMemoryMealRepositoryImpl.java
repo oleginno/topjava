@@ -7,7 +7,11 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -31,8 +35,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
             int second = 1 + random.nextInt(59);
 
             Integer userId = i % 2 != 0 ? 1 : 2;
-            save(new Meal(counter.incrementAndGet(), userId, LocalDateTime.of(
-                    2017, Month.JULY, day, hour, minute, second),
+            save(new Meal(counter.incrementAndGet(), userId,
+                    LocalDateTime.of(2017, Month.JULY, day, hour, minute, second),
                     "Meal-" + i,
                     (int) (Math.random() * (500 - 25)) + 25));
         }

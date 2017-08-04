@@ -10,6 +10,22 @@
 
 <body>
 <h1 align="center">User Meals</h1>
+
+<section>
+    <h3><a href="${pageContext.request.contextPath}">Logout</a></h3>
+    <hr>
+    <form action="meals" method="POST">
+        <input type="hidden" name="action" value="filter">
+        <input type="hidden" name="userId" value="${requestScope["userId"]}">
+        From Date: <input type="date" name="fromDate" title="FromDate"> &emsp; &emsp;
+        From Time: <input type="time" name="fromTime" title="FromTime">
+        <br/>
+        To Date: <input type="date" name="toDate" title="ToDate"> &emsp; &emsp; &emsp;
+        To Time: <input type="time" name="toTime" title="ToTime"> &emsp; &emsp; &emsp;
+        <input type="submit" value="Filter"/>
+    </form>
+</section>
+<hr>
 <p>
 <table align="center">
     <tr>
