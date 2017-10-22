@@ -114,7 +114,7 @@ public class MealServlet extends HttpServlet {
                                     start, end, MealsUtil.DEFAULT_CALORIES_PER_DAY);
                             sortAndSetMeals(meals, request);
                         } else {
-                            throw new IllegalArgumentException("Error of time precedence");
+                            throw new IllegalArgumentException("Error of date precedence");
                         }
                     } else {
                         throw new IllegalArgumentException("Problem/problems with dates and/or times!");
